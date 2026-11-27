@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Java & Spring Boot Interview Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F6F3;--panel:#fff;--ink:#16231E;--mute:#5B6B64;--line:#D9E0DB;--acc:#0E7A66;--ai:#fff;--cb:#14201C;--ci:#E4EEE9;--w:#B4540A;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1513;--panel:#172019;--ink:#E4EEE9;--mute:#93A59C;--line:#263229;--acc:#4CC9AE;--ai:#08110e;--cb:#0A100E;--w:#F2A07B;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1513;--panel:#172019;--ink:#E4EEE9;--mute:#93A59C;--line:#263229;--acc:#4CC9AE;--ai:#08110e;--cb:#0A100E;--w:#F2A07B;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 "IBM Plex Sans",system-ui,sans-serif}
+h1,.brand{font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;letter-spacing:-.01em}
+.app{display:grid;grid-template-columns:320px 1fr;min-height:100vh}
+aside{background:var(--panel);border-right:1px solid var(--line);padding:18px 16px;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow:auto}
+.brand{font-size:20px;font-weight:700;margin:0 0 12px}
+.tabs{display:flex;gap:6px;margin-bottom:12px}
+button{font:inherit;color:var(--ink);cursor:pointer}
+.tabs button{flex:1;padding:8px;border:1px solid var(--line);background:none;border-radius:8px;font-weight:500}
+.tabs .on{background:var(--acc);color:var(--ai);border-color:var(--acc)}
+input[type=search]{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;margin-bottom:10px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc);transition:width .3s}
+.pc{font-size:13px;color:var(--mute);margin:6px 0 8px}
+label{font-size:14px;color:var(--mute)}
+.grp{font-size:13px;color:var(--mute);font-weight:500;margin:16px 0 4px}
+.it{display:flex;gap:8px;align-items:center;width:100%;text-align:left;padding:7px 9px;border:0;background:none;font-size:15px;border-radius:7px}
+.it:hover{background:var(--bg)}.it.on{background:var(--acc);color:var(--ai)}
+.ck{width:16px;height:16px;border:1.5px solid var(--mute);border-radius:50%;flex:none;font-size:11px;line-height:13px;text-align:center}
+.it.s1 .ck{background:var(--acc);border-color:var(--acc);color:var(--ai)}.it.s2 .ck{border-color:var(--w);color:var(--w)}
+main{padding:36px clamp(18px,5vw,64px) 60px;max-width:880px;width:100%}
+.top{display:none}.crumb{color:var(--mute);font-size:14px;margin:0 0 6px}
+h1{font-size:clamp(24px,4.5vw,34px);line-height:1.25;margin:0 0 18px}
+ul{padding-left:20px;margin:0}li{margin:0 0 10px;max-width:70ch}
+.cw{position:relative;margin:22px 0}
+pre{margin:0;background:var(--cb);color:var(--ci);padding:18px;border-radius:10px;overflow-x:auto;font:14px/1.6 "JetBrains Mono",ui-monospace,monospace}
+.cp{position:absolute;top:8px;right:8px;background:#ffffff1a;color:var(--ci);border:0;border-radius:6px;padding:4px 10px;font-size:12px}
+.k{color:#7FD6C2}.s{color:#F0C674}.c{color:#7E8F88;font-style:italic}.n{color:#F2A07B}.a{color:#B8A3F0}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.bd{max-width:68ch;margin:0 0 16px;font-size:17px}code.i{font:.88em "JetBrains Mono",ui-monospace,monospace;background:var(--line);padding:1px 5px;border-radius:4px}
+.btn{padding:10px 16px;border-radius:8px;border:1px solid var(--line);background:var(--panel);font-weight:500}
+.btn.p{background:var(--acc);color:var(--ai);border-color:var(--acc)}.btn.w{border-color:var(--w);color:var(--w)}
+.hint{color:var(--mute);border:1px dashed var(--line);border-radius:10px;padding:18px}
+button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+@media(max-width:800px){.app{display:block}aside{position:fixed;inset:0 auto 0 0;width:86%;max-width:340px;z-index:5;transform:translateX(-100%);transition:transform .2s;height:100%}aside.open{transform:none}.top{display:flex;gap:10px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<div class="top"><button class="btn" id="mb">Menu</button><b class="brand" style="margin:0">Interview Prep</b></div>
+<div class="app"><aside id="sb">
+<p class="brand">Learn Java & Spring Boot, then interview</p>
+<div class="tabs" id="tabs"></div>
+<input type="search" id="q" placeholder="Search questions" aria-label="Search questions">
+<div class="bar"><i id="pb"></i></div><p class="pc" id="pc"></p>
+<label><input type="checkbox" id="rv"> Show only revisit list</label>
+<div id="nav"></div>
+<button class="btn" id="th" style="margin-top:18px">Switch theme</button>
+</aside><main id="m"></main></div>
+<script>
+const D=[
+{tr:"Java",g:"Collections and strings",l:[
+["HashMap internals","How does HashMap work internally, and what changed in Java 8?",`Array of buckets (power-of-two size); index = (n-1) & hash, where hash = h ^ (h >>> 16) to spread the high bits|Collisions form a linked list; at 8+ nodes (and table size 64+) the bucket becomes a red-black tree for O(log n) worst case, and untreeifies at 6|Resize at load factor 0.75 doubles the table; each bucket splits into a low and a high list, so keys are not rehashed|Not thread-safe: concurrent puts can lose entries. Use ConcurrentHashMap|Keys must be effectively immutable with consistent equals/hashCode, or entries become unreachable|Presize with expected / 0.75 to avoid resizes`,`Map<String,Integer> m = new HashMap<>(1 << 16);
+// equals() true  =>  hashCode() must match
+// (the reverse is not required)`],
+["String pool and immutability","Explain String immutability, the string pool and intern().",`Literals live in the pool (on the heap since Java 7); new String("a") creates a separate object|Immutability allows sharing, cached hashCode, thread-safety and safe map keys|Compile-time constants are folded, so "a"+"b" == "ab"; runtime concatenation creates new objects|Concatenating in a loop is O(n²): use StringBuilder (StringBuffer is synchronized and rarely needed)|Use char[] for passwords so they can be wiped`,`String a = "hi", b = "hi", c = new String("hi");
+a == b;           // true (same pooled object)
+a == c;           // false
+a == c.intern();  // true
+a.equals(c);      // true: always compare with equals`],
+["ConcurrentHashMap","ConcurrentHashMap vs Hashtable vs Collections.synchronizedMap?",`Hashtable and synchronizedMap lock the whole map per call; check-then-put still needs external locking|CHM (Java 8+) uses CAS for empty bins and synchronized on the head node of a bin; reads are lock-free (volatile)|Use atomic compound operations: putIfAbsent, compute, merge. Never get() then put()|No null keys or values (absent vs null would be ambiguous)|size() is approximate under concurrency; iterators are weakly consistent and never throw ConcurrentModificationException|For hot counters use LongAdder`,`ConcurrentHashMap<String,Integer> hits = new ConcurrentHashMap<>();
+hits.merge(url, 1, Integer::sum);        // atomic
+hits.computeIfAbsent(k, x -> load(x));   // keep it short; do not touch the map inside`]]},
+{tr:"Java",g:"JVM and memory",l:[
+["JVM memory and GC","Describe JVM memory areas and garbage collection. How do you debug an OutOfMemoryError?",`Heap: young generation (eden + two survivor spaces) and old generation; objects are promoted after surviving several minor GCs|Metaspace (native memory) holds class metadata; each thread has its own stack; direct buffers are off-heap|G1 is the default (regions, pause-time goal); ZGC and Shenandoah give sub-millisecond pauses; Parallel favors throughput|OOM kinds: heap space, Metaspace (class loader leaks), GC overhead limit, unable to create native thread|Debug: heap dump, open in Eclipse MAT, find dominant retainers (static maps, unbounded caches, ThreadLocals)|Tools: jstack, jcmd, jmap, JFR, -Xlog:gc*`,`java -Xms2g -Xmx2g -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError
+     -XX:HeapDumpPath=/tmp/dump.hprof -Xlog:gc*:file=gc.log -jar app.jar`],
+["Memory model and volatile","What do volatile and happens-before guarantee? Why does double-checked locking need volatile?",`volatile gives visibility and ordering, not atomicity: count++ on a volatile is still a race|Happens-before edges: unlock then lock, volatile write then read, Thread.start() then the thread body, thread end then join()|Without volatile, a reader may see a non-null reference to a partially constructed object because writes can be reordered|Safe publication: volatile or final fields, static initializers, concurrent collections|Immutable objects (all final fields) are safe to share`,`class Config {
+    private static volatile Config inst;
+    static Config get() {
+        if (inst == null) {
+            synchronized (Config.class) {
+                if (inst == null) inst = new Config();
+            }
+        }
+        return inst;
+    }
+}`]]},
+{tr:"Java",g:"Concurrency",l:[
+["Locks and deadlocks","synchronized vs ReentrantLock vs atomics? How do you prevent deadlocks?",`synchronized is block-structured, auto-released and well optimized by the JIT; ReentrantLock adds tryLock with timeout, interruptible locking, fairness and multiple Conditions|Atomics (CAS) are lock-free but spin under contention and have the ABA problem (AtomicStampedReference)|Read-heavy data: ReadWriteLock or StampedLock with optimistic reads|Deadlock needs mutual exclusion, hold-and-wait, no preemption and circular wait. Break one: global lock ordering, tryLock with timeout, fewer nested locks|Detect with jstack ("Found one Java-level deadlock") or ThreadMXBean`,`if (lock.tryLock(500, TimeUnit.MILLISECONDS)) {
+    try { /* critical section */ }
+    finally { lock.unlock(); }
+}`],
+["Thread pools and virtual threads","How does ThreadPoolExecutor handle a task? Where do virtual threads fit?",`Order: below core size start a thread; else enqueue; queue full then grow to max; still full then the rejection policy (Abort, CallerRuns, Discard)|With an unbounded queue the pool never grows past core size; newFixedThreadPool uses one, so a slow consumer means OOM. Prefer a bounded queue + CallerRuns for back-pressure|Sizing: CPU-bound is about the core count; IO-bound is cores x (1 + wait/compute). Measure|Starvation: tasks blocking on other tasks in the same pool|Java 21 virtual threads: cheap, one per task, ideal for blocking IO. Do not pool them, avoid long synchronized blocks (pinning), and limit concurrency with a Semaphore`,`var pool = new ThreadPoolExecutor(4, 16, 60, TimeUnit.SECONDS,
+    new ArrayBlockingQueue<>(100), new ThreadPoolExecutor.CallerRunsPolicy());
+try (var ex = Executors.newVirtualThreadPerTaskExecutor()) {
+    ex.submit(() -> callRemote());
+}`]]},
+{tr:"Java",g:"Language and design",l:[
+["Streams pitfalls","What are the pitfalls of Streams and parallel streams?",`Lazy: nothing runs until a terminal operation; a stream can be consumed only once|Collectors.toMap throws on duplicate keys unless you pass a merge function|Avoid side effects and shared mutable state in lambdas; use collect, not forEach + add|Parallel streams share the common ForkJoinPool: only for large, CPU-bound, stateless work on splittable sources (ArrayList, arrays, ranges), never blocking IO|sorted() and distinct() are stateful barriers; use IntStream to avoid boxing|Prefer a plain loop when it is clearer`,`Map<String, Long> byDept = emps.stream()
+    .collect(Collectors.groupingBy(Employee::dept, Collectors.counting()));
+Map<Long, String> byId = users.stream()
+    .collect(Collectors.toMap(User::id, User::name, (a, b) -> a));`],
+["Generics and erasure","Explain type erasure and PECS.",`Generics are erased at compile time: no new T(), no instanceof List<String>, no generic arrays; the compiler adds casts and bridge methods|List<String> is not a List<Object> (invariance), so use wildcards|PECS: Producer Extends, Consumer Super. Use ? extends T to read, ? super T to write|Raw types cause heap pollution: a ClassCastException far from the cause|To keep runtime type info, pass a Class<T> token or a TypeReference (Jackson)`,`static <T> void copy(List<? super T> dst, List<? extends T> src) {
+    for (T t : src) dst.add(t);
+}`],
+["Exception handling","Exception handling: what do interviewers expect beyond try/catch?",`Checked for recoverable conditions the caller must handle; unchecked for programming errors. Modern code leans unchecked and translates at layer boundaries|A return inside finally swallows exceptions; with try-with-resources the primary exception wins and others are attached via getSuppressed()|Always keep the cause (new X(msg, e)); log once at the boundary, not in every layer|Never catch Throwable casually; do not use exceptions for control flow|Catch specific before general`,`try (var in = open(); var out = create()) {
+    in.transferTo(out);
+} catch (IOException e) {
+    throw new StorageException("copy failed", e);
+}`],
+["Patterns and SOLID","Which design patterns and SOLID principles come up most, and where does Java use them?",`SRP, OCP, LSP (subtypes honour the base contract), ISP, DIP (depend on abstractions; Spring DI enables it)|Singleton: enum or holder idiom. Spring singletons are per container, not per JVM|Builder (StringBuilder), Factory (List.of), Strategy (Comparator, lambdas), Decorator (java.io), Observer (listeners), Template Method (JdbcTemplate), Proxy (Spring AOP)|Prefer composition over inheritance and favor immutability`,`enum Registry {
+    INSTANCE;
+    private final Map<String, Object> items = new ConcurrentHashMap<>();
+    Object get(String k) { return items.get(k); }
+}`],
+["Java 8 to 21","What are the key features from Java 8 to 21 worth knowing?",`8: lambdas, streams, Optional, java.time. 9-11: modules, var, HttpClient, List.of|14-17: switch expressions, text blocks, records, sealed classes, pattern matching for instanceof|21 (LTS): virtual threads, pattern matching for switch, record patterns, sequenced collections|Optional is a return type, not a field or parameter; use orElseGet for expensive defaults|Records are final; use compact constructors for validation; ideal for DTOs and map keys`,`sealed interface Shape permits Circle, Rect {}
+record Circle(double r) implements Shape {}
+record Rect(double w, double h) implements Shape {}
+double area(Shape s) {
+    return switch (s) {
+        case Circle c -> Math.PI * c.r() * c.r();
+        case Rect(double w, double h) -> w * h;
+    };
+}`]]},
+{tr:"Spring Boot",g:"Core",l:[
+["Auto-configuration","How does Spring Boot auto-configuration work?",`@SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan (scans the main class’s package and below)|Candidates are listed in META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports (Boot 3; spring.factories before)|Each is guarded by conditions: @ConditionalOnClass, @ConditionalOnMissingBean, @ConditionalOnProperty. Your own bean makes the default back off|Debug with --debug (conditions report) or /actuator/conditions|A custom starter = autoconfigure module + imports file + @ConfigurationProperties`,`@AutoConfiguration
+@ConditionalOnClass(DataSource.class)
+class MyAutoConfig {
+    @Bean @ConditionalOnMissingBean
+    Client client(MyProps p) { return new Client(p.url()); }
+}`],
+["Beans, scopes and DI","Explain bean lifecycle, scopes, injection styles and circular dependencies.",`Lifecycle: instantiate, inject, Aware callbacks, BeanPostProcessor (before), @PostConstruct, init, BeanPostProcessor (after, where AOP proxies are made), ready, @PreDestroy|Scopes: singleton (default, keep stateless), prototype, request, session. A prototype inside a singleton needs ObjectProvider or a scoped proxy|Constructor injection is immutable, testable and fails fast. @Primary sets a default, @Qualifier picks one; inject List<Interface> to get all|@Component is found by scanning; @Bean is explicit factory code for third-party classes|Constructor cycles fail and Boot 2.6+ forbids cycles by default: fix the design, not with @Lazy`,`@Service
+class OrderService {
+    private final List<PaymentGateway> gateways;
+    private final ObjectProvider<Cart> cart;
+    OrderService(List<PaymentGateway> g, ObjectProvider<Cart> c) {
+        this.gateways = g; this.cart = c;
+    }
+}`],
+["Config and startup","How does startup work and what is the property precedence?",`run(): build Environment, create ApplicationContext, refresh (scan, register beans, start embedded Tomcat), then ApplicationRunner/CommandLineRunner|Precedence high to low: command-line args, SPRING_APPLICATION_JSON, OS env vars, profile files, application.yml, @PropertySource, defaults|@ConfigurationProperties gives typed, validated, relaxed binding (app.max-size to maxSize); prefer it over @Value|Use ApplicationReadyEvent for post-start work. Boot 3 needs Java 17+ and the jakarta.* namespace`,`@ConfigurationProperties(prefix = "app")
+@Validated
+record AppProps(@NotBlank String name, @Min(1) int maxSize) {}`]]},
+{tr:"Spring Boot",g:"Data",l:[
+["@Transactional","How does @Transactional really work, and what are the classic pitfalls?",`A proxy (CGLIB by default) opens a transaction before the method and commits or rolls back after|Self-invocation (this.other()) bypasses the proxy, so no transaction; same for private/final methods and non-Spring objects|Rolls back only on RuntimeException/Error by default; use rollbackFor for checked ones. Swallowing the exception prevents rollback|Propagation: REQUIRED (join or create), REQUIRES_NEW (suspend and start new), NESTED (savepoint), SUPPORTS, MANDATORY, NEVER|Isolation: READ_COMMITTED stops dirty reads, REPEATABLE_READ stops non-repeatable reads, SERIALIZABLE stops phantoms; higher means more contention|Keep transactions short; never call remote services inside; readOnly = true allows optimizations`,`@Transactional(rollbackFor = Exception.class, timeout = 5)
+public void place(Order o) { repo.save(o); audit.log(o); }
+
+@Transactional(propagation = Propagation.REQUIRES_NEW)
+public void audit(Order o) { ... }   // call it from ANOTHER bean`],
+["N+1 problem","What is the N+1 problem in JPA and how do you fix it?",`One query loads N parents, then lazy access to each child collection fires N more queries|Fixes: JOIN FETCH, @EntityGraph, DTO projections (best for read models), or batch fetching (hibernate.default_batch_fetch_size)|JOIN FETCH on a collection with pagination paginates in memory (HHH000104): page the ids first, then fetch|Fetching two bags at once raises MultipleBagFetchException|Detect with spring.jpa.show-sql, Hibernate statistics, or datasource-proxy in tests. Make associations LAZY (@ManyToOne is EAGER by default)`,`@Query("select o from Order o join fetch o.items where o.userId = :id")
+List<Order> withItems(@Param("id") Long id);
+
+@EntityGraph(attributePaths = "items")
+List<Order> findByStatus(Status s);`],
+["Persistence context and locking","Explain the persistence context, entity states, optimistic locking and open-in-view.",`States: transient, managed (persist/find), detached (session closed), removed. Managed entities are dirty-checked and flushed at commit without calling save()|The first-level cache is per persistence context: the same id returns the same instance|save() on a new entity is persist; on a detached one it is merge (extra select)|@Version gives optimistic locking: a concurrent update throws OptimisticLockException. Use pessimistic locks (FOR UPDATE) only for hot rows|spring.jpa.open-in-view=true holds the session and connection through the view layer and hides lazy loads: disable it and return DTOs|Base equals/hashCode on a business key or the id with care`,`@Entity
+class Account {
+    @Id @GeneratedValue Long id;
+    @Version Long version;
+    BigDecimal balance;
+}`]]},
+{tr:"Spring Boot",g:"Web and security",l:[
+["REST API design","How do you design REST APIs and error responses properly?",`GET/PUT/DELETE are idempotent, POST is not (use an Idempotency-Key header for payments)|Status codes: 201 + Location on create, 204, 400 malformed, 401 unauthenticated vs 403 forbidden, 404, 409 conflict, 422 validation, 429 rate limit|Do not expose entities: use DTOs (records) and MapStruct; paginate with Pageable and cap the page size|Spring 6 ProblemDetail implements RFC 9457: consistent error bodies from one @RestControllerAdvice|Version via path or header; ETag/If-Match for concurrency`,`@RestControllerAdvice
+class ApiErrors extends ResponseEntityExceptionHandler {
+    @ExceptionHandler(NotFound.class)
+    ProblemDetail nf(NotFound e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
+    }
+}`],
+["MVC request flow","Walk through an HTTP request in Spring MVC. How is it different from WebFlux?",`Servlet filters, DispatcherServlet, HandlerMapping, HandlerAdapter, argument resolvers + HttpMessageConverters (Jackson), controller, return value handler, converter, response|Filters are servlet-level and run first (security, logging, CORS); interceptors (preHandle/postHandle) are Spring-aware|Exceptions go to HandlerExceptionResolvers (@ExceptionHandler, @ControllerAdvice)|WebFlux is non-blocking (Reactor Mono/Flux, Netty): high concurrency with few threads, but all code must be non-blocking|With Java 21, MVC + virtual threads (spring.threads.virtual.enabled=true) is often simpler`,`@Component
+class RequestIdFilter extends OncePerRequestFilter {
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res,
+            FilterChain chain) throws IOException, ServletException {
+        MDC.put("rid", UUID.randomUUID().toString());
+        try { chain.doFilter(req, res); } finally { MDC.clear(); }
+    }
+}`],
+["Spring Security and JWT","Describe Spring Security’s architecture and how you implement JWT authentication.",`Request, FilterChainProxy, SecurityFilterChain (ordered filters), AuthenticationManager, AuthenticationProvider, UserDetailsService + PasswordEncoder, SecurityContextHolder (thread-local)|JWT flow: login verifies credentials and issues a short-lived access token (plus refresh token); a OncePerRequestFilter before UsernamePasswordAuthenticationFilter validates signature, expiry and claims, then sets the Authentication|Stateless: STATELESS sessions and CSRF off (cookie-based apps need CSRF on)|Method security: @EnableMethodSecurity with @PreAuthorize("hasRole('ADMIN')")|Often better: act as an OAuth2 resource server instead of hand-rolling JWT|Hash passwords with BCrypt or Argon2`,`http.csrf(c -> c.disable())
+  .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+  .authorizeHttpRequests(a -> a.requestMatchers("/auth/**").permitAll()
+                               .anyRequest().authenticated())
+  .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);`]]},
+{tr:"Spring Boot",g:"Quality and production",l:[
+["Testing strategy","How do you test a Spring Boot application effectively?",`Pyramid: many plain unit tests (no Spring), fewer slice tests, few full @SpringBootTest|Slices: @WebMvcTest (controllers + MockMvc), @DataJpaTest (repositories), @JsonTest. Mock beans with @MockBean (@MockitoBean from Boot 3.4)|Use Testcontainers with the real database instead of H2 to avoid dialect surprises; @ServiceConnection wires it up|Different @MockBean sets or properties create new contexts and slow the suite|Test rollback, security rules (@WithMockUser) and error contracts, not only happy paths`,`@Testcontainers @SpringBootTest
+class RepoIT {
+    @Container @ServiceConnection
+    static PostgreSQLContainer<?> pg = new PostgreSQLContainer<>("postgres:16");
+}`],
+["Production readiness","What do you configure to make a Spring Boot service production-ready?",`Actuator (health, liveness/readiness probes, metrics) with Micrometer to Prometheus/Grafana; secure the endpoints|HikariCP: keep the pool small (about cores x 2 + disks), set timeouts and leak detection|Graceful shutdown, externalized config (env vars, Config Server, Vault), profiles|Structured JSON logs, correlation id via MDC, tracing with Micrometer Tracing/OpenTelemetry|@Cacheable with Redis + TTL; know stampede and invalidation risks|@Async and @Scheduled need a configured executor; scheduled jobs on several instances need ShedLock|Startup: lazy init, AOT/GraalVM native image, layered jars for Docker`,`server.shutdown=graceful
+spring.lifecycle.timeout-per-shutdown-phase=30s
+management.endpoint.health.probes.enabled=true
+spring.datasource.hikari.maximum-pool-size=10
+spring.threads.virtual.enabled=true`],
+["Microservice patterns","Which microservice patterns and failure-handling techniques should you know?",`Gateway (Spring Cloud Gateway) for routing, auth and rate limits; discovery via Eureka or Kubernetes DNS; centralized config|Resilience4j: timeout, retry with backoff + jitter, circuit breaker (closed/open/half-open), bulkhead, rate limiter. Retry only idempotent calls|Consistency: no distributed transactions; use Saga (choreography or orchestration) with compensating actions|Outbox pattern: write the event in the same DB transaction and publish asynchronously, avoiding the dual-write bug|Kafka: ordering per partition key, consumer groups scale, at-least-once delivery so consumers must be idempotent; dead-letter topics for poison messages|Tracing, metrics, contract tests (Pact, Spring Cloud Contract)`,`@CircuitBreaker(name = "inventory", fallbackMethod = "cached")
+@Retry(name = "inventory")
+Stock stock(String sku) { return client.get(sku); }
+Stock cached(String sku, Throwable t) { return Stock.unknown(sku); }`]]}];
+const C=[
+{tr:"Java",g:"1. Language foundations",l:[
+["Types, memory and pass-by-value",`Java has 8 primitives (byte, short, int, long, float, double, char, boolean) stored by value, and reference types (classes, arrays, interfaces) stored as a reference to an object on the heap. Local variables and call frames live on the thread stack; objects live on the heap and are reclaimed by the garbage collector.|Java is always pass-by-value. For objects the value copied is the reference, so a method can mutate the object it receives, but reassigning the parameter does not change the caller’s variable.|Boxing converts int to Integer automatically. Integer.valueOf caches -128 to 127, so ~==~ on boxed numbers works for small values and fails for large ones: compare with ~equals~. Unboxing a null throws NullPointerException. Fields default to 0, false or null; local variables have no default.`,`static void change(StringBuilder sb, int n) {
+    sb.append("!");           // mutates the shared object
+    sb = new StringBuilder(); // only changes the local copy
+    n = 99;                   // caller's int is untouched
+}
+Integer a = 127, b = 127, c = 1000, d = 1000;
+System.out.println(a == b);      // true (cached)
+System.out.println(c == d);      // false (different objects)
+System.out.println(c.equals(d)); // true`],
+["OOP in depth",`Encapsulation hides state behind methods so invariants stay valid. Inheritance (~extends~) reuses behaviour but couples child to parent, so prefer composition unless there is a true is-a relationship. Polymorphism runs the subclass override chosen at runtime (dynamic dispatch); overloads are chosen at compile time from the argument types.|An interface is a contract a class can implement many times, with default and static methods since Java 8. An abstract class can hold state and constructors, but a class extends only one. Use interfaces for capabilities (Comparable) and abstract classes for a shared skeleton (template method).|Every class inherits ~equals~ and ~hashCode~. Contract: equal objects must have equal hash codes, and equals must be reflexive, symmetric, transitive and consistent. Override both together or HashMap and HashSet break. Fields are hidden, not overridden, and static methods are not polymorphic.`,`abstract class Shape {
+    abstract double area();
+    String describe() { return getClass().getSimpleName() + " " + area(); }
+}
+class Circle extends Shape {
+    final double r;
+    Circle(double r) { this.r = r; }
+    double area() { return Math.PI * r * r; }
+    @Override public boolean equals(Object o) { return o instanceof Circle c && c.r == r; }
+    @Override public int hashCode() { return Double.hashCode(r); }
+}
+Shape s = new Circle(2); // runtime type decides area()`],
+["Strings and immutability",`A String is an immutable sequence of characters. Because it never changes it is thread-safe, caches its hash code, and is a safe HashMap key. Literals are interned in the string pool, so identical literals are one object, while ~new String("a")~ always allocates a new one.|Each concatenation creates a new string, so building text in a loop is O(n²). Use ~StringBuilder~ (fast, not thread-safe); ~StringBuffer~ is the synchronized version and rarely needed. Compare with ~equals~, never ~==~.|Useful methods: ~strip~, ~isBlank~, ~repeat~, ~lines~, ~formatted~, plus text blocks for multi-line literals. Prefer ~char[]~ for secrets so they can be zeroed after use.`,`String a = "java", b = "java", c = new String("java");
+System.out.println(a == b);      // true
+System.out.println(a == c);      // false
+System.out.println(a.equals(c)); // true
+StringBuilder sb = new StringBuilder();
+for (int i = 0; i < 5; i++) sb.append(i).append(',');
+String json = """
+    {"name": "Asha"}
+    """;`]]},
+{tr:"Java",g:"2. Core APIs",l:[
+["Collections framework",`~List~ keeps order and allows duplicates: ~ArrayList~ (array, O(1) get, O(n) middle insert) is the default. ~Set~ removes duplicates: ~HashSet~ (O(1)), ~LinkedHashSet~ (insertion order), ~TreeSet~ (sorted, O(log n)). ~Map~ has the same three flavours plus ~ConcurrentHashMap~ for threads. ~ArrayDeque~ replaces Stack and ~PriorityQueue~ is a binary heap.|HashMap hashes the key, picks a bucket with (n-1) & hash and chains collisions in a list that becomes a red-black tree at 8 entries. It resizes at 0.75 load. That is why keys need consistent equals/hashCode and should be immutable.|Iterators are fail-fast: modifying a collection while iterating throws ConcurrentModificationException (use ~removeIf~). ~List.of~ and ~Map.of~ are immutable; ~Comparator.comparing~ builds orderings.`,`Map<String, List<String>> byCity = new HashMap<>();
+byCity.computeIfAbsent("Pune", k -> new ArrayList<>()).add("Asha");
+users.removeIf(u -> u.isInactive());
+users.sort(Comparator.comparing(User::age).thenComparing(User::name));
+Deque<Integer> stack = new ArrayDeque<>();
+stack.push(1); stack.pop();`],
+["Generics",`Generics let one class or method work with many types while the compiler checks them: a ~List<String>~ cannot hold an Integer and needs no casts. They use type erasure: the type argument vanishes at runtime, so you cannot write ~new T()~, ~instanceof List<String>~ or create generic arrays.|Generics are invariant: ~List<Integer>~ is not a ~List<Number>~. Wildcards restore flexibility: ~? extends T~ when you only read (producer), ~? super T~ when you only write (consumer). This is PECS. Bounds such as ~T extends Comparable<T>~ let you call methods on T. Avoid raw types, which switch checking off.`,`static <T extends Comparable<T>> T max(List<? extends T> items) {
+    T best = items.get(0);
+    for (T t : items) if (t.compareTo(best) > 0) best = t;
+    return best;
+}
+static void fill(List<? super Integer> out) { out.add(42); }`],
+["Exceptions",`Throwable has two branches: ~Error~ (OutOfMemoryError, StackOverflowError: do not catch) and ~Exception~. Checked exceptions (IOException) must be caught or declared and model recoverable conditions. Unchecked ones (RuntimeException) signal bugs such as NullPointerException or IllegalArgumentException. Spring and most modern code prefer unchecked exceptions.|~try-with-resources~ closes any AutoCloseable in reverse order and records secondary failures as suppressed exceptions. A ~finally~ block always runs, so never return from it. Catch specific types first, wrap with the cause (~new AppException(msg, e)~) to keep the stack trace, and log once where the error is finally handled. Create domain exceptions and translate low-level ones at layer boundaries.`,`class InsufficientFunds extends RuntimeException {
+    InsufficientFunds(String m) { super(m); }
+}
+void withdraw(double amt) {
+    if (amt > balance) throw new InsufficientFunds("balance " + balance);
+    balance -= amt;
+}
+try (var r = new BufferedReader(new FileReader("a.txt"))) {
+    System.out.println(r.readLine());
+} catch (IOException e) {
+    throw new UncheckedIOException(e);
+}`],
+["Lambdas, Streams and Optional",`A lambda implements a functional interface (one abstract method): ~Function<T,R>~, ~Predicate<T>~, ~Consumer<T>~, ~Supplier<T>~, ~Comparator<T>~. Method references (~String::length~) are shorthand. Lambdas can only capture effectively final variables.|A stream is a lazy pipeline: intermediate operations (filter, map, flatMap, sorted, distinct) build it and a terminal operation (collect, reduce, count, forEach) runs it. Nothing executes without a terminal operation, and a stream is consumed once. Collectors aggregate: ~groupingBy~, ~partitioningBy~, ~joining~, ~toMap~. Use ~IntStream~ to avoid boxing and ~parallel()~ only for large CPU-bound work.|~Optional~ is for return values: ~map~, ~orElse~, ~orElseThrow~; do not call ~get()~ blindly or use it for fields.`,`record Emp(String name, String dept, double pay) {}
+Map<String, Double> avg = emps.stream()
+    .filter(e -> e.pay() > 20_000)
+    .collect(Collectors.groupingBy(Emp::dept, Collectors.averagingDouble(Emp::pay)));
+String names = emps.stream().map(Emp::name).sorted().collect(Collectors.joining(", "));
+Optional<Emp> top = emps.stream().max(Comparator.comparingDouble(Emp::pay));
+System.out.println(top.map(Emp::name).orElse("none"));`]]},
+{tr:"Java",g:"3. JVM and concurrency",l:[
+["JVM, memory and garbage collection",`Source compiles to bytecode. The JVM loads classes through a class loader hierarchy (bootstrap, platform, application), verifies them, then interprets and JIT-compiles hot methods to native code. Memory areas: the heap (all objects, shared), thread stacks (frames and locals), Metaspace (class metadata, native memory) and the code cache.|The heap has a young generation (eden + survivor spaces) and an old generation. New objects start in eden; a minor GC copies survivors and long-lived objects are promoted. G1 (default) works on regions with a pause-time goal; ZGC and Shenandoah collect mostly concurrently for very low pauses. An object is collectable when unreachable from GC roots, so leaks are objects still held by a static map, a cache or a ThreadLocal.|Tune after measuring: set -Xms equal to -Xmx on servers, read GC logs, analyze heap dumps with Eclipse MAT, profile with JFR.`,`// production flags
+java -Xms2g -Xmx2g -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -Xlog:gc*:file=gc.log -jar app.jar
+
+class Leaky {
+    static final Map<String, byte[]> CACHE = new HashMap<>(); // never evicted
+    static void load(String k) { CACHE.put(k, new byte[1_000_000]); }
+}`],
+["Threads, memory model and synchronization",`A thread is an independent path of execution that shares the heap with other threads. Trouble starts with shared mutable state: race conditions (two threads doing count++), visibility (a thread never sees another’s write) and reordering by the compiler or CPU. The Java Memory Model defines when a write is guaranteed visible through happens-before edges: unlock then lock, volatile write then read, Thread.start and join.|~synchronized~ gives mutual exclusion and visibility on an object monitor. ~volatile~ gives visibility and ordering for one variable but not atomic compound actions. ~AtomicInteger~ uses CAS for lock-free updates. ~ReentrantLock~ adds tryLock, timeouts and fairness. Deadlock is a cycle of threads waiting on each other: always take locks in the same order.|The safest design avoids sharing: immutable objects, thread confinement (~ThreadLocal~) and concurrent collections.`,`class Counter {
+    private int n;
+    private final AtomicInteger a = new AtomicInteger();
+    synchronized void inc() { n++; }           // monitor lock
+    void incAtomic() { a.incrementAndGet(); }  // CAS, no lock
+}
+Thread t = new Thread(() -> System.out.println("hello"));
+t.start();
+t.join();`],
+["Executors, CompletableFuture and virtual threads",`A thread per task does not scale. An ~ExecutorService~ reuses pooled workers and ~submit~ returns a ~Future~. ThreadPoolExecutor runs a task on a free core thread, else queues it, and grows to the maximum only when the queue is full, so the queue type and rejection policy matter. Size CPU-bound pools near the core count and IO-bound pools larger.|~CompletableFuture~ composes async steps without blocking: ~supplyAsync~ starts, ~thenApply~ transforms, ~thenCompose~ chains another async call, ~thenCombine~ joins two results, ~exceptionally~ recovers. Pass your own executor; the default is the shared common pool.|Java 21 virtual threads are lightweight threads scheduled by the JVM: start one per task, write simple blocking code, avoid long synchronized sections (they pin the carrier thread), and cap scarce resources with a Semaphore.`,`ExecutorService pool = Executors.newFixedThreadPool(4);
+var user  = CompletableFuture.supplyAsync(() -> fetchUser(1), pool);
+var order = CompletableFuture.supplyAsync(() -> fetchOrder(1), pool);
+String result = user.thenCombine(order, (u, o) -> u + ":" + o)
+                    .exceptionally(ex -> "fallback").join();
+pool.shutdown();
+try (var vt = Executors.newVirtualThreadPerTaskExecutor()) {
+    vt.submit(() -> System.out.println("virtual thread"));
+}`]]},
+{tr:"Spring Boot",g:"1. Core",l:[
+["IoC container, beans and DI",`Inversion of Control means the framework creates and wires your objects instead of you calling ~new~. The container (ApplicationContext) holds beans: objects built from classes annotated ~@Component~, ~@Service~, ~@Repository~, ~@Controller~, or from ~@Bean~ methods in a ~@Configuration~ class. Dependency injection passes collaborators in, which makes classes easy to test and swap.|Prefer constructor injection: dependencies are final, required and visible. With several implementations use ~@Primary~ or ~@Qualifier~. Beans are singletons by default (keep them stateless); other scopes are prototype, request and session. Lifecycle: instantiate, inject, ~@PostConstruct~, ready, ~@PreDestroy~.|~@Autowired~ is optional on a single constructor; ~@Lazy~ delays creation; ~@Profile~ activates beans per environment. Circular constructor dependencies fail at startup: redesign them.`,`interface PaymentGateway { void pay(double amt); }
+@Service @Primary
+class StripeGateway implements PaymentGateway { public void pay(double a) { /* call API */ } }
+@Service
+class OrderService {
+    private final PaymentGateway gateway;
+    OrderService(PaymentGateway gateway) { this.gateway = gateway; }
+    void checkout(double total) { gateway.pay(total); }
+}`],
+["Boot: starters, auto-configuration, config",`A starter (~spring-boot-starter-web~, ~-data-jpa~, ~-security~) is one dependency that pulls in a compatible set of libraries. ~@SpringBootApplication~ combines ~@Configuration~, ~@ComponentScan~ and ~@EnableAutoConfiguration~. Auto-configuration classes switch on when conditions hold (class on the classpath, bean missing, property set) and back off when you define your own bean.|Settings live in ~application.yml~ or ~.properties~; environment variables and command-line arguments override them. Profiles (~application-prod.yml~, ~spring.profiles.active~) separate environments. Bind groups of settings with ~@ConfigurationProperties~ rather than many ~@Value~ fields: it is typed, validated and supports relaxed names.|The app runs as a fat jar with embedded Tomcat (~java -jar app.jar~). Start with ~--debug~ to see which auto-configurations matched.`,`// application.yml
+//   app:
+//     name: shop
+//     max-items: 50
+@ConfigurationProperties(prefix = "app")
+record AppProps(String name, int maxItems) {}
+
+@SpringBootApplication
+@ConfigurationPropertiesScan
+public class ShopApp {
+    public static void main(String[] a) { SpringApplication.run(ShopApp.class, a); }
+}`],
+["AOP, proxies and @Transactional",`Aspect-oriented programming moves cross-cutting concerns (logging, security, transactions, caching, metrics) out of business code. Spring AOP wraps beans in a runtime proxy: a JDK proxy if the bean has an interface, otherwise a CGLIB subclass. An aspect has advice (~@Before~, ~@After~, ~@Around~) applied to join points selected by a pointcut expression.|~@Transactional~ is AOP: the proxy begins a transaction, calls your method, then commits, or rolls back on a RuntimeException. Because it is proxy-based, calling another transactional method of the same class (self-invocation) skips the proxy, and private methods are ignored. Checked exceptions do not roll back unless you set ~rollbackFor~.|Propagation: REQUIRED (default) joins the current transaction; REQUIRES_NEW suspends it and starts a new one (good for audit logs). Isolation levels trade consistency for concurrency. Keep transactions short and never hold one across remote calls.`,`@Aspect @Component
+class TimingAspect {
+    @Around("execution(* com.shop.service..*(..))")
+    Object time(ProceedingJoinPoint pjp) throws Throwable {
+        long t = System.nanoTime();
+        try { return pjp.proceed(); }
+        finally { System.out.println(pjp.getSignature() + " ns=" + (System.nanoTime() - t)); }
+    }
+}
+@Transactional(rollbackFor = Exception.class)
+public void transfer(Long from, Long to, BigDecimal amt) { debit(from, amt); credit(to, amt); }`]]},
+{tr:"Spring Boot",g:"2. Web and data",l:[
+["MVC, REST and validation",`A request reaches the ~DispatcherServlet~, which finds a handler method, converts the JSON body to an object with Jackson, calls your controller and converts the result back. ~@RestController~ is ~@Controller~ plus ~@ResponseBody~. Map verbs with ~@GetMapping~, ~@PostMapping~, ~@PutMapping~, ~@DeleteMapping~ and read input with ~@PathVariable~, ~@RequestParam~, ~@RequestBody~, ~@RequestHeader~.|Return proper status codes with ~ResponseEntity~ (201 with a Location header on create). Expose DTOs, not entities, so internal changes do not break clients. Validate with Bean Validation (~@Valid~, ~@NotBlank~, ~@Size~, ~@Email~); failures raise ~MethodArgumentNotValidException~.|Centralize errors in a ~@RestControllerAdvice~ with ~@ExceptionHandler~ methods returning a consistent body such as ~ProblemDetail~. Page results with ~Pageable~ and keep controllers thin: business logic belongs in services.`,`record CreateBook(@NotBlank String title, @Min(1) int pages) {}
+@RestController @RequestMapping("/api/books")
+class BookController {
+    private final BookService svc;
+    BookController(BookService svc) { this.svc = svc; }
+    @PostMapping ResponseEntity<Book> create(@Valid @RequestBody CreateBook in) {
+        Book b = svc.create(in);
+        return ResponseEntity.created(URI.create("/api/books/" + b.id())).body(b);
+    }
+    @GetMapping Page<Book> list(Pageable p) { return svc.list(p); }
+}
+@RestControllerAdvice
+class Errors {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    ProblemDetail bad(Exception e) { return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Invalid input"); }
+}`],
+["JPA, Hibernate and Spring Data",`JPA maps classes to tables; Hibernate implements it and Spring Data JPA generates repositories on top. An ~@Entity~ has an ~@Id~; relationships are ~@OneToMany~, ~@ManyToOne~, ~@ManyToMany~ (the side with ~mappedBy~ is the inverse side). Collections are LAZY by default: data loads when touched, which needs an open session or you get LazyInitializationException.|Spring Data derives queries from method names (~findByEmailAndActiveTrue~) and ~@Query~ handles JPQL or native SQL; return DTO projections for read-heavy endpoints. The classic trap is the N+1 problem: one query for N parents plus one per child. Fix it with ~JOIN FETCH~, ~@EntityGraph~ or batch fetching.|Managed entities are tracked in the persistence context, so changes flush at commit without calling save(). Add ~@Version~ for optimistic locking, use Flyway or Liquibase instead of ~ddl-auto=update~ in production, and set ~spring.jpa.open-in-view=false~.`,`@Entity
+class Author {
+    @Id @GeneratedValue Long id;
+    String name;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL) List<Book> books = new ArrayList<>();
+}
+@Entity
+class Book {
+    @Id @GeneratedValue Long id;
+    String title;
+    @ManyToOne(fetch = FetchType.LAZY) Author author;
+}
+interface AuthorRepo extends JpaRepository<Author, Long> {
+    @Query("select a from Author a join fetch a.books where a.name = :n")
+    Optional<Author> withBooks(@Param("n") String n);
+}`]]},
+{tr:"Spring Boot",g:"3. Security and testing",l:[
+["Spring Security and JWT",`Spring Security is a chain of servlet filters in front of your app. A request is authenticated (who are you?) into an ~Authentication~ held in the ~SecurityContextHolder~, then authorized (what may you do?) by URL rules or annotations. Credentials are checked through a ~UserDetailsService~ and passwords are hashed with ~BCryptPasswordEncoder~, never stored as plain text.|For REST APIs use stateless auth. The client logs in and receives a signed JWT (header, claims, signature) with a short expiry, then sends it in the Authorization header as a Bearer token. A filter placed before ~UsernamePasswordAuthenticationFilter~ verifies signature and expiry and fills the security context. Add a refresh token for long sessions, or make Spring an OAuth2 resource server so an identity provider (Keycloak, Auth0) issues the tokens.|Secure methods with ~@PreAuthorize~. Disable CSRF only for stateless token APIs, configure CORS explicitly, and return 401 for unauthenticated and 403 for unauthorized requests.`,`@Configuration @EnableMethodSecurity
+class SecurityConfig {
+    @Bean SecurityFilterChain chain(HttpSecurity http, JwtFilter jwt) throws Exception {
+        return http.csrf(c -> c.disable())
+            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(a -> a.requestMatchers("/auth/**").permitAll().anyRequest().authenticated())
+            .addFilterBefore(jwt, UsernamePasswordAuthenticationFilter.class)
+            .build();
+    }
+    @Bean PasswordEncoder encoder() { return new BCryptPasswordEncoder(); }
+}
+@PreAuthorize("hasRole('ADMIN')") @DeleteMapping("/{id}") void delete(@PathVariable Long id) { ... }`],
+["Testing Spring Boot applications",`Test at several levels. Plain JUnit 5 + Mockito unit tests need no Spring and run in milliseconds: put business rules there. Slice tests load one layer: ~@WebMvcTest~ (controllers with MockMvc, services mocked) and ~@DataJpaTest~ (repositories against a database). ~@SpringBootTest~ starts the full context and is kept for a few end-to-end checks.|Use Testcontainers to run the real database (PostgreSQL) in Docker so tests match production; ~@ServiceConnection~ wires it automatically. Mock collaborators with ~@MockBean~ (~@MockitoBean~ in newer Boot) and use ~@WithMockUser~ for secured endpoints.|Cover failure paths: validation errors, 404, 403, rollback. Every new combination of mocks restarts the Spring context, so keep the variety small.`,`@WebMvcTest(BookController.class)
+class BookControllerTest {
+    @Autowired MockMvc mvc;
+    @MockBean BookService svc;
+    @Test void rejectsBlankTitle() throws Exception {
+        mvc.perform(post("/api/books").contentType("application/json").content(blankTitleJson()))
+           .andExpect(status().isBadRequest());
+    }
+}`]]},
+{tr:"Spring Boot",g:"4. Production and microservices",l:[
+["Observability, caching and microservices",`Make the service observable. Actuator exposes health (with liveness and readiness probes for Kubernetes), metrics and info; Micrometer ships metrics to Prometheus and Grafana, and tracing (OpenTelemetry) follows a request across services. Log JSON with a correlation id in the MDC, enable graceful shutdown and size the HikariCP connection pool deliberately.|Speed up reads with ~@Cacheable~ (Caffeine locally or Redis shared) and always set a TTL. Configure executors for ~@Async~ and ~@Scheduled~; with several instances a scheduler needs a lock (ShedLock). Keep secrets in the environment or Vault.|In microservices each service owns its data. Call others with timeouts, retries and a circuit breaker (Resilience4j) so one slow dependency does not take everything down. Without distributed transactions use a saga and the outbox pattern, exchange events through Kafka with idempotent consumers, and put a gateway in front for routing, authentication and rate limits.`,`// application.yml: management.endpoints.web.exposure.include: health,metrics,prometheus
+@Cacheable(value = "products", key = "#id")
+public Product find(Long id) { return repo.findById(id).orElseThrow(); }
+
+@CircuitBreaker(name = "inventory", fallbackMethod = "unknown")
+@Retry(name = "inventory")
+Stock stock(String sku) { return inventoryClient.get(sku); }
+Stock unknown(String sku, Throwable t) { return Stock.unknown(sku); }`]]}];
+const L=[];let n=0;
+["Java","Spring Boot"].forEach(T=>{
+ C.filter(g=>g.tr==T).forEach(g=>g.l.forEach(x=>L.push({id:"c"+n++,tr:T,g:g.g,t:x[0],b:x[1],c:x[2]})));
+ D.filter(g=>g.tr==T).forEach(g=>g.l.forEach(x=>L.push({id:"q"+n++,tr:T,g:"Interview questions",t:x[0],q:x[1],p:x[2].split("|"),c:x[3]})));
+});
+const $=s=>document.querySelector(s),h=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+let st={};try{st=JSON.parse(localStorage.getItem("js")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem("js",JSON.stringify(st))}catch(e){}};
+let tr="Java",cur=L[0],q="",rev=false,open=false;
+const KW="public private protected class interface extends implements static final void int long double boolean char new return if else for while do switch case default try catch finally throw throws import this null true false var record enum abstract sealed permits yield instanceof";
+const RX=new RegExp("(\\/\\/.*|\\/\\*[\\s\\S]*?\\*\\/)|(\"(?:\\\\.|[^\"\\\\])*\")|(@\\w+)|\\b("+KW.split(" ").join("|")+")\\b|\\b(\\d+\\.?\\d*)\\b","g");
+const hl=c=>h(c).replace(RX,(m,a,b,d,e,f)=>a?`<span class=c>${a}</span>`:b?`<span class=s>${b}</span>`:d?`<span class=a>${d}</span>`:e?`<span class=k>${e}</span>`:`<span class=n>${f}</span>`);
+function nav(){
+ $("#tabs").innerHTML=["Java","Spring Boot"].map(t=>`<button class="${t==tr?"on":""}" data-t="${t}">${t}</button>`).join("");
+ const all=L.filter(x=>x.tr==tr),dn=all.filter(x=>st[x.id]==1).length;
+ $("#pb").style.width=dn/all.length*100+"%";$("#pc").textContent=dn+" of "+all.length+" understood, "+all.filter(x=>st[x.id]==2).length+" to revisit";
+ const f=all.filter(x=>(!q||(x.t+(x.q||"")+(x.b||"")+(x.p||[]).join()+x.c).toLowerCase().includes(q))&&(!rev||st[x.id]==2));let g="",o="";
+ f.forEach(x=>{if(x.g!=g){g=x.g;o+=`<div class=grp>${g}</div>`}
+ o+=`<button class="it s${st[x.id]||0} ${x.id==cur.id?"on":""}" data-id="${x.id}"><span class=ck>${st[x.id]==1?"✓":st[x.id]==2?"!":""}</span>${x.t}</button>`});
+ $("#nav").innerHTML=o||'<p class=hint>Nothing here yet. Clear the search or the revisit filter.</p>';}
+function show(id,push){const x=L.find(y=>y.id==id)||L[0];cur=x;tr=x.tr;
+ const i=L.indexOf(x),p=L[i-1],nx=L[i+1],Q=!!x.q,ps=s=>h(s).replace(/~(.+?)~/g,"<code class=i>$1</code>");
+ $("#m").innerHTML=`<p class=crumb>${x.tr}: ${x.g}</p><h1>${h(Q?x.q:x.t)}</h1>`+
+ (Q?`<ul>${x.p.map(t=>`<li>${ps(t)}</li>`).join("")}</ul>`:x.b.split("|").map(t=>`<p class=bd>${ps(t)}</p>`).join(""))+
+ `<div class=cw><pre><code>${hl(x.c)}</code></pre><button class=cp>Copy</button></div><div class=row><button class="btn p" id=g1>${st[x.id]==1?"Unmark":"I understand this"}</button><button class="btn w" id=g2>${st[x.id]==2?"Remove flag":"Revisit later"}</button>${p?`<button class=btn data-id="${p.id}">Previous</button>`:""}${nx?`<button class=btn data-id="${nx.id}">Next</button>`:""}</div>`;
+ if(push!==0)try{history.replaceState(null,"","#"+x.id)}catch(e){}
+ $("#sb").classList.remove("open");nav();}
+function showOld(id,push){const x=L.find(y=>y.id==id)||L[0];if(x!=cur)open=false;cur=x;tr=x.tr;
+ const i=L.indexOf(x),p=L[i-1],nx=L[i+1];
+ $("#m").innerHTML=`<p class=crumb>${x.tr}: ${x.g}</p><h1>${h(x.q)}</h1>`+(open?`<ul>${x.p.map(t=>`<li>${h(t)}</li>`).join("")}</ul><div class=cw><pre><code>${hl(x.c)}</code></pre><button class=cp>Copy</button></div>`:`<p class=hint>Answer out loud first, as you would in the interview. Then reveal the model answer and compare.</p>`)+
+ `<div class=row><button class="btn p" id=rv2>${open?"Hide answer":"Reveal answer"}</button>${open?`<button class=btn id=g1>${st[x.id]==1?"Unmark":"I know this"}</button><button class="btn w" id=g2>${st[x.id]==2?"Remove flag":"Revisit later"}</button>`:""}${p?`<button class=btn data-id="${p.id}">Previous</button>`:""}${nx?`<button class=btn data-id="${nx.id}">Next</button>`:""}</div>`;
+ if(push!==0)try{history.replaceState(null,"","#"+x.id)}catch(e){}
+ $("#sb").classList.remove("open");nav();}
+const mark=v=>{st[cur.id]==v?delete st[cur.id]:st[cur.id]=v;save();show(cur.id)};
+document.addEventListener("click",e=>{const t=e.target,b=t.closest("[data-id]");
+ if(t.dataset.t){tr=t.dataset.t;nav();return}
+ if(b){open=false;show(b.dataset.id);scrollTo(0,0);return}
+ if(t.id=="rv2"){open=!open;show(cur.id)}
+ if(t.id=="g1")mark(1);if(t.id=="g2")mark(2);
+ if(t.className=="cp"&&navigator.clipboard)navigator.clipboard.writeText(cur.c).then(()=>{t.textContent="Copied";setTimeout(()=>t.textContent="Copy",1200)}).catch(()=>{})});
+$("#q").oninput=e=>{q=e.target.value.toLowerCase();nav()};
+$("#rv").onchange=e=>{rev=e.target.checked;nav()};
+$("#mb").onclick=()=>$("#sb").classList.toggle("open");
+$("#th").onclick=()=>{const r=document.documentElement,d=r.dataset.theme?r.dataset.theme=="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=d?"light":"dark"};
+addEventListener("hashchange",()=>{open=false;show(location.hash.slice(1),0)});
+show(location.hash.slice(1)||L[0].id,0);
+</script></body></html>
